@@ -1,5 +1,8 @@
-# Personal folders
+# Project specific
 pdfs/
+
+# marimo
+**/__marimo__/
 
 # Python-generated files
 __pycache__/
