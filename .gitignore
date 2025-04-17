@@ -1,0 +1,17 @@
+# Project specific
+pdfs/
+
+# marimo
+**/__marimo__/
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Environments
+.env
+.venv

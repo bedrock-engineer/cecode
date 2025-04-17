@@ -1,0 +1,31 @@
+Create a marimo notebook that guides a civil engineer through the step-by-step calculation process of the bearing resistance of a shallow foundation on soil based on the Terzaghi/Meyerhof bearing capacity equation as specified in Eurocode 7 part 1 EN 1997-1, Clause 6.5 and Annex D.
+
+The notebook must have the following structure:
+
+## Inputs
+For each input parameter:
+- Create a **Python variable** with a default value.
+- Define:
+  - Lower and upper bounds
+  - A brief **description** (copied from the code of practice)
+  - The **LaTeX symbol** as used in the code of practice
+  - The **unit of measurement** as used in the code of practice
+
+## Calculation
+- Use subsections to mirror the code’s logic.
+- Clearly describe each step in Markdown.
+- For each calculation:
+  - Reference the specific clause number in the code
+  - Display the formula in LaTeX
+  - Show intermediate steps with Python variables
+  - Display intermediate and final results using formatted Markdown
+  - Include charts, diagrams, or plots where helpful (e.g., bearing pressure vs. width, failure envelope, etc.).
+
+## Results
+- Present final results in a clean summary.
+- Use Markdown to list final values with LaTeX symbols, units, and variable names.
+
+Follow the code of practice document as closely as possible.
+Prefer clarity over compactness. 
+Use graphics where it helps the civil engineer understand the mechanics.
+There are no restrictions on the Python packages that you can use.

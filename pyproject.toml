@@ -1,0 +1,33 @@
+[project]
+name = "cecode"
+version = "0.1.0"
+description = "Civil Engineering Codes in readable, usable, executable Python."
+readme = "README.md"
+authors = [
+    {name = "Bedrock", email = "info@bedrock.engineer"}
+]
+requires-python = ">=3.9"
+dependencies = [
+    "marimo>=0.12.10",
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+]
+keywords = [
+    "civil-engineering",
+    "structural-engineering",
+    "ground-engineering",
+    "geotechnical-engineering",
+    "eurocode",
+    "british-standard",
+    "bsi",
+    "aec",
+    "bim",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.urls]
+Source = "https://github.com/bedrock-engineer/cecode"
+Tracker = "https://github.com/bedrock-engineer/cecode/issues"
