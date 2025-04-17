@@ -7,7 +7,11 @@ authors = [
     {name = "Bedrock", email = "info@bedrock.engineer"}
 ]
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "marimo>=0.12.10",
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+]
 keywords = [
     "civil-engineering",
     "structural-engineering",
