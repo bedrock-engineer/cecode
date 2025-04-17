@@ -1,8 +1,3 @@
-# /// script
-# [tool.marimo.runtime]
-# auto_instantiate = false
-# ///
-
 import marimo
 
 __generated_with = "0.12.10"
@@ -12,8 +7,8 @@ app = marimo.App(width="medium")
 @app.cell
 def _():
     import marimo as mo
-    import numpy as np
     import matplotlib.pyplot as plt
+    import numpy as np
     import pandas as pd
 
     # Constants for calculations
@@ -93,6 +88,26 @@ def _():
 
 
 @app.cell
+def _(mo):
+    mo.md(
+        r"""
+        From marimo's kapa.ai: 
+
+        >The error you're encountering is related to how LaTeX and f-strings interact in Marimo's markdown function. The issue is that you're using an r-string (raw string) with the .format() method, but your LaTeX expressions contain curly braces which are conflicting with Python's string formatting syntax.
+        >
+        >When you use curly braces in LaTeX (like in \pi \tan \phi), Python's .format() method interprets these as placeholders for formatting, causing the KeyError: '\\pi \\tan \\phi' error.
+        >
+        >To fix this issue, you need to escape the curly braces in your LaTeX expressions by doubling them. This tells Python to treat them as literal curly braces rather than format specifiers.
+        >
+        >Notice below how I've doubled the curly braces in the LaTeX expressions (e.g., e^{{\pi \tan \phi}} instead of e^{\pi \tan \phi}). This is a common requirement when mixing LaTeX with Python string formatting.
+        >
+        >[source](https://discord.com/channels/1059888774789730424/1362549495576924170/1362549585045750053)
+        """
+    )
+    return
+
+
+@app.cell
 def _(friction_angle, mo, np):
     # Calculation of bearing capacity factors
     # Reference: Eurocode 7, Clause 6.5
@@ -101,11 +116,12 @@ def _(friction_angle, mo, np):
     phi_rad = np.radians(friction_angle)
 
     # Bearing capacity factors
-    Nq = np.exp(np.pi * np.tan(phi_rad)) * (np.tan(np.radians(45) + phi_rad / 2))**2
+    Nq = np.exp(np.pi * np.tan(phi_rad)) * (np.tan(np.radians(45) + phi_rad / 2)) ** 2
     Nc = (Nq - 1) / np.tan(phi_rad)
     Ngamma = 2 * (Nq + 1) * np.tan(phi_rad)
 
-    mo.md(r"""
+    mo.md(
+        r"""
     ## Calculation
 
     ### Bearing Capacity Factors
@@ -114,8 +130,8 @@ def _(friction_angle, mo, np):
 
     The bearing capacity factors are calculated as follows:
 
-    - $N_q = e^{\pi \tan \phi} \tan^2(45^\circ + \frac{\phi}{2})$
-    - $N_c = \frac{N_q - 1}{\tan \phi}$
+    - $N_q = e^{{\pi \tan \phi}} \tan^2(45^\circ + \frac{{\phi}}{{2}})$
+    - $N_c = \frac{{N_q - 1}}{{\tan \phi}}$
     - $N_\gamma = 2 (N_q + 1) \tan \phi$
 
     Intermediate values:
@@ -124,7 +140,8 @@ def _(friction_angle, mo, np):
     - $N_c = {:.2f}$
     - $N_\gamma = {:.2f}$
 
-    """.format(Nq, Nc, Ngamma))
+    """.format(Nq, Nc, Ngamma)
+    )
     return Nc, Ngamma, Nq, phi_rad
 
 
@@ -143,9 +160,14 @@ def _(Nc, Ngamma, Nq, cohesion, depth, mo, unit_weight_soil, width):
     # More complex calculations can be added based on specific conditions
 
     # Ultimate bearing capacity
-    qult = (cohesion * Nc * sc) + (unit_weight_soil * depth * Nq * sq) + (0.5 * unit_weight_soil * width * Ngamma * sgamma)
+    qult = (
+        (cohesion * Nc * sc)
+        + (unit_weight_soil * depth * Nq * sq)
+        + (0.5 * unit_weight_soil * width * Ngamma * sgamma)
+    )
 
-    mo.md(r"""
+    mo.md(
+        r"""
     ### Ultimate Bearing Capacity
 
     - **Clause 6.5**
@@ -161,7 +183,8 @@ def _(Nc, Ngamma, Nq, cohesion, depth, mo, unit_weight_soil, width):
 
     - $q_{ult} = {:.2f}$ kN/m²
 
-    """.format(qult))
+    """.format(qult)
+    )
     return qult, sc, sgamma, sq
 
 
@@ -169,7 +192,8 @@ def _(Nc, Ngamma, Nq, cohesion, depth, mo, unit_weight_soil, width):
 def _(mo, qult):
     # Results summary
 
-    mo.md(r"""
+    mo.md(
+        r"""
     ## Results
 
     The final calculated ultimate bearing capacity of the shallow foundation is:
@@ -178,7 +202,8 @@ def _(mo, qult):
 
     This value represents the maximum pressure that the soil can support under the foundation without failure.
 
-    """.format(qult))
+    """.format(qult)
+    )
     return
 
 
