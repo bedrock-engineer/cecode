@@ -4,13 +4,8 @@ __generated_with = "0.12.10"
 app = marimo.App(width="medium")
 
 
-@app.cell
-def _():
-    import marimo as mo
-    import matplotlib.pyplot as plt
-    import numpy as np
-    import pandas as pd
-
+@app.cell(hide_code=True)
+def _(mo):
     # Constants for calculations
     # These are default values and can be adjusted by the user
     width = 2.0  # Width of the foundation (B) in meters
@@ -73,41 +68,10 @@ def _():
       - Unit: degrees
 
     """)
-    return (
-        cohesion,
-        depth,
-        friction_angle,
-        length,
-        mo,
-        np,
-        pd,
-        plt,
-        unit_weight_soil,
-        width,
-    )
+    return cohesion, depth, friction_angle, length, unit_weight_soil, width
 
 
-@app.cell
-def _(mo):
-    mo.md(
-        r"""
-        From marimo's kapa.ai: 
-
-        >The error you're encountering is related to how LaTeX and f-strings interact in Marimo's markdown function. The issue is that you're using an r-string (raw string) with the .format() method, but your LaTeX expressions contain curly braces which are conflicting with Python's string formatting syntax.
-        >
-        >When you use curly braces in LaTeX (like in \pi \tan \phi), Python's .format() method interprets these as placeholders for formatting, causing the KeyError: '\\pi \\tan \\phi' error.
-        >
-        >To fix this issue, you need to escape the curly braces in your LaTeX expressions by doubling them. This tells Python to treat them as literal curly braces rather than format specifiers.
-        >
-        >Notice below how I've doubled the curly braces in the LaTeX expressions (e.g., e^{{\pi \tan \phi}} instead of e^{\pi \tan \phi}). This is a common requirement when mixing LaTeX with Python string formatting.
-        >
-        >[source](https://discord.com/channels/1059888774789730424/1362549495576924170/1362549585045750053)
-        """
-    )
-    return
-
-
-@app.cell
+@app.cell(hide_code=True)
 def _(friction_angle, mo, np):
     # Calculation of bearing capacity factors
     # Reference: Eurocode 7, Clause 6.5
@@ -145,7 +109,7 @@ def _(friction_angle, mo, np):
     return Nc, Ngamma, Nq, phi_rad
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(Nc, Ngamma, Nq, cohesion, depth, mo, unit_weight_soil, width):
     # Calculation of ultimate bearing capacity
     # Reference: Eurocode 7, Clause 6.5
@@ -174,21 +138,21 @@ def _(Nc, Ngamma, Nq, cohesion, depth, mo, unit_weight_soil, width):
 
     The ultimate bearing capacity is calculated using the formula:
 
-    $$q_{ult} = c N_c s_c + \gamma D N_q s_q + 0.5 \gamma B N_\gamma s_\gamma$$
+    $$q_{{ult}} = c N_c s_c + \gamma D N_q s_q + 0.5 \gamma B N_\gamma s_\gamma$$
 
     Where:
     - $s_c$, $s_q$, $s_\gamma$ are shape factors (assumed to be 1 for strip footing)
 
     Intermediate and final results:
 
-    - $q_{ult} = {:.2f}$ kN/m²
+    - $q_{{ult}} = {:.2f}$ kN/m²
 
     """.format(qult)
     )
     return qult, sc, sgamma, sq
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo, qult):
     # Results summary
 
@@ -198,13 +162,21 @@ def _(mo, qult):
 
     The final calculated ultimate bearing capacity of the shallow foundation is:
 
-    - $q_{ult} = {:.2f}$ kN/m²
+    - $q_{{ult}} = {:.2f}$ kN/m²
 
     This value represents the maximum pressure that the soil can support under the foundation without failure.
 
     """.format(qult)
     )
     return
+
+
+@app.cell
+def _():
+    import marimo as mo
+    import matplotlib.pyplot as plt
+    import numpy as np
+    return mo, np, plt
 
 
 if __name__ == "__main__":
